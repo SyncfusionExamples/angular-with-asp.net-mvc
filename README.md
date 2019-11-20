@@ -1,4 +1,4 @@
-# Getting Started ASP .NET MVC with Angular using Project Template
+# Getting Started ASP .NET MVC and Angular using Project Template
 
 This document helps you to create a simple ASP.NET MVC application with Angular Framework and Syncfusion Angular UI components (Essential JS 2).
 
@@ -21,6 +21,7 @@ Create a new project with a project template.
 3. Select `ASP.NET Web Application` and change the application name, and then click OK.
 
 4. Select `MVC` as a project template and then click OK. The application is created.
+
 
 ## Configure TypeScript Configuration file
 
@@ -140,9 +141,11 @@ To restore the packages, right-click the package.json file and select `Restore P
 
 To compile TypeScript files to the JavaScript file, the Gulp task configuration is needed.
 
-Right-click the sample root folder and click Add > New Item > Gulp Configuration File. Then name it as `gulpfile.json`.
+Right-click the sample root folder and click Add > New Item > Gulp Configuration File. Then name it as `gulpfile.js`.
 
-Add the following code in the `gulpfile.json` file.
+If the Gulp Configuration File is not available in the list, install `NPM Task Runner`. And then it will be available in the list items.
+
+Add the following code in the `gulpfile.js` file.
 
 ```typescript
 /// <binding />
@@ -182,13 +185,212 @@ gulp.task('watch.ts', ['ts'], function () {
 gulp.task('default', ['watch']);
 
 ```
-## Create an Angular application
 
-To create an angular application, refer to the [`Getting-started-with-angular-cli`](https://ej2.syncfusion.com/angular/documentation/getting-started/angular-cli/) document.
+## Setup Angular Structure
 
-## Add Angular application to MVC
+Right-click the sample root folder and click Add > New Folder. Create a new folder and name it as `src`.
 
-Copy the `src` folder of the angular application and paste it in the root folder of the MVC project.
+To create an angular app module file, Right-click on the `src` folder and click Add > New Item > Typescript File. Then name it as `app.module.ts`.
+
+Paste the below code snippet in  the `app.module.ts` file.
+
+```typescript
+import { NgModule, enableProdMode, ErrorHandler } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
+
+import { EJAngular2Module } from 'ej-angular2';
+
+import { AppComponent } from './app.component';
+import { HomeComponent } from './home/home.component';
+import { GridComponent } from './grid/grid.component';
+
+import { rootRouterConfig } from './app.routes';
+
+enableProdMode();
+
+class CustomErrorHandler implements ErrorHandler {
+  call(error, stackTrace = null, reason = null) {
+    console.log(error + "\n" + stackTrace);
+  }
+  handleError(error: any): void {
+    console.log(error);
+  }
+}
+
+@NgModule({
+  imports: [BrowserModule, FormsModule, HttpModule, EJAngular2Module.forRoot(), RouterModule.forRoot(rootRouterConfig, { useHash: true })],
+  declarations: [AppComponent, HomeComponent, GridComponent],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+```
+
+Then create angular main file by Right-click on the `src` folder and click Add > New Item > Typescript File. Then name it as `main.ts`.
+
+Add the below code snippet in the `main.ts` file.
+
+```typescript
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { AppModule } from './app.module';
+
+platformBrowserDynamic().bootstrapModule(AppModule);
+
+```
+
+Right-click on the `src` folder and click Add > New Item > Typescript File. Then name it as `app.component.ts`.
+
+Add the below code snippet in  the `app.component.ts` file.
+
+```typescript
+import {Component, ViewEncapsulation} from '@angular/core';
+
+@Component({
+  selector: 'ej-app',
+  templateUrl: 'src/app.component.html',
+  styleUrls:['src/app.component.css']
+})
+export class AppComponent {
+}
+
+```
+
+Then, Create `app.component.html` and `app.component.css` files.
+
+Code snippet for `app.component.ts` file:
+
+```typescript
+  
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div style="padding-left:0px;" class="collapse navbar-collapse" id="skeleton-navigation-navbar-collapse">
+		<ul class="nav navbar-nav">
+			<li><a data-toggle="collapse" data-target="#skeleton-navigation-navbar-collapse.in" href="#">Syncfusion Angular Seed</a></li>
+			<li><a data-toggle="collapse" data-target="#skeleton-navigation-navbar-collapse.in" href="#home">Home</a></li>
+			<li><a data-toggle="collapse" data-target="#skeleton-navigation-navbar-collapse.in" href="#grid">Grid</a></li>
+		</ul>
+	</div>
+</nav>
+<main>
+	<router-outlet></router-outlet>
+</main>
+
+```
+
+Code snippet for `app.component.css` file:
+
+```typescript
+main {
+    padding: 1em;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 50px;
+    display: block;
+}
+
+```
+
+### Add Grid Component
+
+Create a `grid` folder under the `src` folder. Then create grid Components in the `grid` folder.
+
+Create app component file `grid.component.ts` and paste the below code snippet
+
+```typescript
+import { Component } from '@angular/core';
+
+@Component({
+    selector: 'ej-app',
+    templateUrl: 'src/grid/grid.component.html',
+})
+export class GridComponent {
+    public gridData: any;
+    constructor() {
+        this.gridData = [{
+            OrderID: 10248, CustomerID: 'VINET', EmployeeID: 5,
+            OrderDate: new Date(8364186e5), Freight: 32.38
+        },
+        {
+            OrderID: 10249, CustomerID: 'TOMSP', EmployeeID: 6,
+            OrderDate: new Date(836505e6), Freight: 11.61
+        },
+        {
+            OrderID: 10250, CustomerID: 'HANAR', EmployeeID: 4,
+            OrderDate: new Date(8367642e5), Freight: 65.83
+        },
+        {
+            OrderID: 10251, CustomerID: 'VICTE', EmployeeID: 3,
+            OrderDate: new Date(8367642e5), Freight: 41.34
+        },
+        {
+            OrderID: 10252, CustomerID: 'SUPRD', EmployeeID: 4,
+            OrderDate: new Date(8368506e5), Freight: 51.3
+        }];
+    }
+}
+
+```
+
+Create `grid.component.html` file and Add the below code in it.
+
+```typescript
+<ej-grid [allowPaging]="true" [allowSorting]="true" [dataSource]="gridData">
+    <e-columns>
+        <e-column field="OrderID" headerText="Order ID" width="75" textAlign="right"></e-column>
+        <e-column field="CustomerID" headerText="Customer ID" width="80"></e-column>
+        <e-column field="EmployeeID" headerText="Employee ID" width="75" textAlign="right"></e-column>
+        <e-column field="Freight" width="75" format="{0:C}" textAlign="right"></e-column>
+        <e-column field="OrderDate" headerText="Order Date" width="80" format="{0:MM/dd/yyyy}" textAlign="right"></e-column>
+    </e-columns>
+</ej-grid>
+
+```
+
+### Add Home Component
+
+Create a `home` folder under the `src` folder. Then create home Components in the `home` folder.
+
+Create app component file `home.component.ts` and paste the below code snippet
+
+```typescript
+import { Component } from '@angular/core';
+
+@Component({
+    selector: 'ej-app',
+    templateUrl: 'src/home/home.component.html',
+})
+export class HomeComponent {
+}
+
+```
+
+Create `home.component.html` file and Add the below code in it.
+
+```typescript
+<br/>
+<p style="padding-left:20px;">Essential JavaScript provides support for Angular Framework through wrappers.
+    Each Syncfusion widgets are created as Angular components with built in support for
+     data binding and child directives to make complex property definition easier.</p>
+     
+```
+
+### Update Routing
+
+After that, create a `app.routes.ts` file under the `src` folder and update the routing for created modules.
+
+```typescript
+import { Routes } from '@angular/router';
+import { GridComponent } from './grid/grid.component';
+import { HomeComponent } from './home/home.component';
+
+export const rootRouterConfig: Routes = [
+    { path: '', redirectTo: 'home', pathMatch: 'full' },
+    { path: 'home', component: HomeComponent },
+    { path: 'grid', component: GridComponent }
+];
+
+```
 
 ## Add systemjs configuration to load Angular core modules
 
