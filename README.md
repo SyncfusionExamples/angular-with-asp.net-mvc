@@ -143,7 +143,7 @@ To compile TypeScript files to the JavaScript file, the Gulp task configuration 
 
 Right-click the sample root folder and click Add > New Item > Gulp Configuration File. Then name it as `gulpfile.js`.
 
-If the Gulp Configuration File is not available in the list, install `NPM Task Runner`. And then it will be available in the list items.
+If the Gulp Configuration File is not available in the list, install [`NPM Task Runner`](https://marketplace.visualstudio.com/items?itemName=MadsKristensen.NPMTaskRunner). And then it will be available in the list items.
 
 Add the following code in the `gulpfile.js` file.
 
