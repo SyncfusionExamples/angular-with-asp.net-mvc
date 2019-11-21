@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace Angular_MVC
+namespace Angular_with_ASP.NET_MVC
 {
     public class RouteConfig
     {
@@ -16,7 +16,7 @@ namespace Angular_MVC
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "App", action = "Index", id = UrlParameter.Optional }
             );
         }
     }
