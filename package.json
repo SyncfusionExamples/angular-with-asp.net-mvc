@@ -24,9 +24,9 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@angular/common": "~21.0.6",
-    "@angular/compiler": "~21.0.6",
-    "@angular/core": "~21.1.2",
+    "@angular/common": "~21.2.4",
+    "@angular/compiler": "~21.2.4",
+    "@angular/core": "~21.2.4",
     "@angular/forms": "~4.3.4",
     "@angular/http": "~4.3.4",
     "@angular/platform-browser": "~4.3.4",
